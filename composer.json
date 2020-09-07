@@ -1,0 +1,13 @@
+{
+    "name": "shampine/sequence",
+    "description": "A modern pipeline package for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patrick Shampine",
+            "email": "patrick@patrickshampine.com"
+        }
+    ],
+    "require": {}
+}
