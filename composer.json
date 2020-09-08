@@ -9,5 +9,13 @@
             "email": "patrick@patrickshampine.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php" : "^7.4",
+        "laravel/laravel": "^7.25"
+    },
+    "autoload": {
+        "psr-4": {
+            "Shampine\\Sequence\\": "src/"
+        }
+    }
 }
