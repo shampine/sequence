@@ -11,19 +11,24 @@ use Shampine\Sequence\Payload\AbstractResponsePayload;
 
 abstract class AbstractPipeline
 {
-    protected Pipeline $pipeline;
+    protected array $pipelines = [];
     protected AbstractRequestPayload $requestPayload;
 
-    public function __construct(Pipeline $pipeline, AbstractRequestPayload $requestPayload)
+    public function __construct( AbstractRequestPayload $requestPayload)
     {
-        $this->pipeline = $pipeline;
         $this->requestPayload = $requestPayload;
     }
 
-    public function process(): AbstractResponsePayload
+    public function process(string $pipelineName): AbstractResponsePayload
     {
+        if (!isset($this->pipelines[$pipelineName])) {
+            throw new SequenceException('Pipeline provided does not exist in pipelines.');
+        }
+
+        $pipeline = $this->pipelines[$pipelineName];
+
         try {
-            return $this->pipeline->process($this->requestPayload);
+            return $pipeline->process($this->requestPayload);
         } catch (ValidationException $validationException) {
             // @todo return error response payload
         } catch (SequenceException $sequenceException) {
