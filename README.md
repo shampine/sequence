@@ -80,9 +80,9 @@ method will convert the ResponsePayload to json and close the request.
 public function create(Request $request)
 {
     $payload = (new SampleRequestPayload())->hydratePost($request->post());
-    $pipeline = new SamplePipline($payload);
+    $pipeline = new SamplePipline();
 
-    return $pipeline->process('PipelineSample')->responseJson();
+    return $pipeline->process(SamplePipeline::PIPELINE_SAMPLE, $payload)->responseJson();
 }
 ```
 

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Shampine\Sequence\Pipeline;
 
-use League\Pipeline\Pipeline;
 use Shampine\Sequence\Exceptions\SequenceException;
 use Shampine\Sequence\Exceptions\ValidationException;
 use Shampine\Sequence\Payload\AbstractRequestPayload;
@@ -12,27 +11,36 @@ use Shampine\Sequence\Payload\AbstractResponsePayload;
 abstract class AbstractPipeline
 {
     protected array $pipelines = [];
-    protected AbstractRequestPayload $requestPayload;
 
-    public function __construct( AbstractRequestPayload $requestPayload)
-    {
-        $this->requestPayload = $requestPayload;
-    }
-
-    public function process(string $pipelineName): AbstractResponsePayload
+    public function process(string $pipelineName, AbstractRequestPayload $requestPayload): AbstractResponsePayload
     {
         if (!isset($this->pipelines[$pipelineName])) {
-            throw new SequenceException('Pipeline provided does not exist in pipelines.');
+            throw new SequenceException('Pipeline name provided does not exist in pipelines.');
         }
 
         $pipeline = $this->pipelines[$pipelineName];
 
         try {
-            return $pipeline->process($this->requestPayload);
+            return $pipeline->process($requestPayload);
         } catch (ValidationException $validationException) {
             // @todo return error response payload
         } catch (SequenceException $sequenceException) {
             // @todo return error response payload
         }
+    }
+
+    public function format()
+    {
+
+    }
+
+    public function toArray()
+    {
+
+    }
+
+    public function toJson()
+    {
+
     }
 }
