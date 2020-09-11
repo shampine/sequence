@@ -5,14 +5,28 @@ namespace Shampine\Sequence\Payload;
 
 trait PatchTrait
 {
+    /**
+     * @var bool
+     */
     protected bool $isPatch = false;
+
+    /**
+     * @var array
+     */
     protected array $patch = [];
 
+    /**
+     * @return array
+     */
     public function getPatch(): array
     {
         return $this->patch;
     }
 
+    /**
+     * @param array $patch
+     * @return $this
+     */
     public function setPatch(array $patch)
     {
         $this->isPatch = true;
@@ -20,6 +34,9 @@ trait PatchTrait
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isPatch(): bool
     {
         return $this->isPatch;

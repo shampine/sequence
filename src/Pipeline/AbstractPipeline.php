@@ -31,26 +31,13 @@ abstract class AbstractPipeline
         $pipeline = $this->pipelines[$pipelineName];
 
         try {
-            return $pipeline->process($requestPayload);
+            $responsePayload = $pipeline->process($requestPayload);
         } catch (ValidationException $validationException) {
-            return new ErrorResponsePayload($validationException);
+            $responsePayload = new ErrorResponsePayload($validationException);
         } catch (SequenceException $sequenceException) {
-            return new ErrorResponsePayload($sequenceException);
+            $responsePayload = new ErrorResponsePayload($sequenceException);
         }
-    }
 
-    public function format()
-    {
-
-    }
-
-    public function toArray()
-    {
-
-    }
-
-    public function toJson()
-    {
-
+        return $responsePayload;
     }
 }

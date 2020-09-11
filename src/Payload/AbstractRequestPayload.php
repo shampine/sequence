@@ -3,23 +3,38 @@ declare(strict_types=1);
 
 namespace Shampine\Sequence\Payload;
 
-use Shampine\Sequence\Exceptions\SequenceException;
+use RuntimeException;
 
 abstract class AbstractRequestPayload
 {
+    /**
+     * @var array
+     */
     protected array $overrides = [];
+
+    /**
+     * @var array
+     */
     protected array $whitelist = [];
 
+    /**
+     * @param array $post
+     * @return $this
+     */
     final public function hydratePost(array $post = []): self
     {
         $this->hydrate($post);
         return $this;
     }
 
+    /**
+     * @param array $patch
+     * @return $this
+     */
     final public function hydratePatch(array $patch = []): self
     {
         if ($this instanceof PatchInterface) {
-            throw new SequenceException('Payload must implement PatchInterface');
+            throw new RuntimeException('Payload must implement PatchInterface');
         }
 
         $this->hydrate($patch);
