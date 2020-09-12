@@ -15,15 +15,18 @@ class SamplePipeline extends AbstractPipeline
     public const SAMPLE_PIPELINE = 'SamplePipeline';
 
     /**
-     * @param bool $validationFailure
-     * @param bool $sequenceFailure
+     * @param SampleUseService|null $sampleUseService
      */
-    public function __construct(bool $validationFailure = false, bool $sequenceFailure = false)
+    public function __construct(?SampleUseService $sampleUseService = null)
     {
         $this->pipelines = [
-            self::SAMPLE_PIPELINE => static function() use ($validationFailure, $sequenceFailure) {
+            self::SAMPLE_PIPELINE => static function(
+                bool $validationFailure = false,
+                bool $sequenceFailure = false
+            ) use ($sampleUseService)
+            {
                 return (new Pipeline)
-                    ->pipe(new ValidationExceptionProcess($validationFailure))
+                    ->pipe(new ValidationExceptionProcess($validationFailure, $sampleUseService))
                     ->pipe(new SequenceExceptionProcess($sequenceFailure))
                     ->pipe(new HydrateResponsePayloadProcess(SampleResponsePayload::class));
             }
