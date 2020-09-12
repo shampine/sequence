@@ -43,14 +43,8 @@ flags and other stage related properties can be injected using `->process($pipel
 ```
 class SamplePipeline extends AbstractPipeline
 {
-    /**
-     * @constant string
-     */
     public const SAMPLE_PIPELINE = 'SamplePipeline';
 
-    /**
-     * @param SampleUseService|null $sampleUseService
-     */
     public function __construct(?SampleUseService $sampleUseService = null)
     {
         $this->pipelines = [
@@ -76,6 +70,9 @@ class SamplePipeline extends AbstractPipeline
     }
 }
 ```
+
+The property `$excludeWhenEmpty` or `$excludeWhenNull` will check ANY root or data keys to see if their value is
+`empty()` or `=== null`. If so they are excluded from the final array, all keys should use `snake_case`.
 
 ### Response Payloads
 
