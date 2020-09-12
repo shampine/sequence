@@ -8,14 +8,25 @@ use Shampine\Sequence\Process\AbstractProcess;
 
 class ValidationExceptionProcess extends AbstractProcess
 {
+    /**
+     * @var bool
+     */
     protected bool $fail = false;
 
-    public function __construct(bool $fail)
+    /**
+     * @param bool $fail
+     */
+    public function __construct(bool $fail = false)
     {
         $this->fail = $fail;
     }
 
-    public function process($payload)
+    /**
+     * @param SampleRequestPayload $payload
+     * @return SampleRequestPayload
+     * @throws ValidationException
+     */
+    public function process($payload): SampleRequestPayload
     {
         if ($this->fail) {
             throw new ValidationException();

@@ -21,6 +21,11 @@ trait ExceptionTrait
     protected string $errorMessage = '';
 
     /**
+     * @var array<array<string>|string>
+     */
+    protected array $errorMessages = [];
+
+    /**
      * @return int
      */
     public function getErrorCode(): int
@@ -71,6 +76,24 @@ trait ExceptionTrait
     public function setErrorMessage(string $errorMessage)
     {
         $this->errorMessage = $errorMessage;
+        return $this;
+    }
+
+    /**
+     * @return array<array<string>|string>
+     */
+    public function getErrorMessages(): array
+    {
+        return $this->errorMessages;
+    }
+
+    /**
+     * @param array<array<string>|string> $errorMessages
+     * @return $this
+     */
+    public function setErrorMessages(array $errorMessages): self
+    {
+        $this->errorMessages = $errorMessages;
         return $this;
     }
 }

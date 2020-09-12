@@ -22,5 +22,9 @@ abstract class AbstractProcess
         return $this->process($payload);
     }
 
+    /**
+     * @param AbstractRequestPayload $payload
+     * @return AbstractRequestPayload|AbstractResponsePayload
+     */
     abstract public function process($payload);
 }

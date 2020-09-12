@@ -8,17 +8,17 @@ use RuntimeException;
 abstract class AbstractRequestPayload
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected array $overrides = [];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected array $whitelist = [];
 
     /**
-     * @param array $post
+     * @param array<mixed> $post
      * @return $this
      */
     final public function hydratePost(array $post = []): self
@@ -28,7 +28,7 @@ abstract class AbstractRequestPayload
     }
 
     /**
-     * @param array $patch
+     * @param array<mixed> $patch
      * @return $this
      */
     final public function hydratePatch(array $patch = []): self
@@ -42,7 +42,7 @@ abstract class AbstractRequestPayload
     }
 
     /**
-     * @param array $values
+     * @param array<mixed> $values
      */
     protected function hydrate($values = []): void
     {

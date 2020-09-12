@@ -16,7 +16,7 @@ abstract class AbstractResponsePayload
     protected int $statusCode;
 
     /**
-     * @var array|null
+     * @var array<mixed>|null
      */
     protected ?array $data = null;
 
@@ -26,7 +26,7 @@ abstract class AbstractResponsePayload
     protected ?string $message = null;
 
     /**
-     * @var array|null
+     * @var array<array<string>|string>|null
      */
     protected ?array $errorMessages = [];
 
@@ -67,7 +67,7 @@ abstract class AbstractResponsePayload
     }
 
     /**
-     * @return array|null
+     * @return array<mixed>|null
      */
     public function getData(): ?array
     {
@@ -75,7 +75,7 @@ abstract class AbstractResponsePayload
     }
 
     /**
-     * @param array|null $data
+     * @param array<mixed>|null $data
      * @return $this
      */
     public function setData(?array $data): self
@@ -103,7 +103,7 @@ abstract class AbstractResponsePayload
     }
 
     /**
-     * @return array|null
+     * @return array<array<string>|string>|null
      */
     public function getErrorMessages(): ?array
     {
@@ -111,7 +111,7 @@ abstract class AbstractResponsePayload
     }
 
     /**
-     * @param array|null $errorMessages
+     * @param array<array<string>|string>|null $errorMessages
      * @return $this
      */
     public function setErrorMessages(?array $errorMessages): self

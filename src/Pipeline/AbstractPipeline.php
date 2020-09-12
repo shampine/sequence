@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Shampine\Sequence\Pipeline;
 
 use BadFunctionCallException;
+use Closure;
+use League\Pipeline\Pipeline;
 use Shampine\Sequence\Exceptions\SequenceException;
 use Shampine\Sequence\Exceptions\ValidationException;
 use Shampine\Sequence\Payload\AbstractRequestPayload;
@@ -13,7 +15,7 @@ use Shampine\Sequence\Payload\ErrorResponsePayload;
 abstract class AbstractPipeline
 {
     /**
-     * @var array
+     * @var array<Closure>
      */
     protected array $pipelines = [];
 
@@ -28,6 +30,7 @@ abstract class AbstractPipeline
             throw new BadFunctionCallException('Pipeline name provided does not exist in pipelines.');
         }
 
+        /** @var Pipeline $pipeline */
         $pipeline = $this->pipelines[$pipelineName];
 
         try {
