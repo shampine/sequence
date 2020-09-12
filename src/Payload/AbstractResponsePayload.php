@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Shampine\Sequence\Payload;
 
+use Shampine\Sequence\Support\StatusCode;
+
 abstract class AbstractResponsePayload
 {
     /**
@@ -13,7 +15,7 @@ abstract class AbstractResponsePayload
     /**
      * @var int
      */
-    protected int $statusCode;
+    protected int $statusCode = StatusCode::OK;
 
     /**
      * @var array<mixed>|null

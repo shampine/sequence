@@ -21,7 +21,7 @@ abstract class AbstractRequestPayload
      * @param array<mixed> $post
      * @return $this
      */
-    final public function hydratePost(array $post = []): self
+    public function hydratePost(array $post = []): self
     {
         $this->hydrate($post);
         return $this;
