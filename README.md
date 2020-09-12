@@ -1,5 +1,5 @@
 # sequence
-https://github.com/shampine/sequence/workflows/Sequence%20Build/badge.svg
+![example workflow name](https://github.com/shampine/sequence/workflows/Sequence%20Build/badge.svg)
 
 A Laravel Pipeline package to sequence a request/response flow.
 
