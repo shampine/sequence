@@ -4,9 +4,28 @@ declare(strict_types=1);
 namespace Sample;
 
 use Shampine\Sequence\Payload\AbstractRequestPayload;
+use Shampine\Sequence\Payload\PatchInterface;
+use Shampine\Sequence\Payload\PatchTrait;
 
-class SampleRequestPayload extends AbstractRequestPayload
+class SampleRequestPayload extends AbstractRequestPayload implements PatchInterface
 {
+    use PatchTrait;
+
+    /**
+     * @constant array<string>
+     */
+    public const WHITELIST = [
+        'name',
+        'age',
+    ];
+
+    /**
+     * @constant array<string>
+     */
+    public const OVERRIDES = [
+        'years' => 'age',
+    ];
+
     /**
      * @var string
      */

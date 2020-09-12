@@ -4,27 +4,37 @@ declare(strict_types=1);
 namespace Shampine\Sequence\Payload;
 
 use RuntimeException;
+use Shampine\Sequence\Support\Str;
 
 abstract class AbstractRequestPayload
 {
     /**
      * @var array<string>
      */
-    protected array $overrides = [];
+    protected array $whitelist = [];
 
     /**
      * @var array<string>
      */
-    protected array $whitelist = [];
+    protected array $overrides = [];
+
+    /**
+     * @param array<string> $overrides
+     * @param array<string> $whitelist
+     */
+    public function __construct(array $whitelist = [], array $overrides = [])
+    {
+        $this->whitelist = $whitelist;
+        $this->overrides = $overrides;
+    }
 
     /**
      * @param array<mixed> $post
      * @return $this
      */
-    public function hydratePost(array $post = []): self
+    final public function hydratePost(array $post = []): self
     {
-        $this->hydrate($post);
-        return $this;
+        return $this->hydrate($post);
     }
 
     /**
@@ -33,31 +43,33 @@ abstract class AbstractRequestPayload
      */
     final public function hydratePatch(array $patch = []): self
     {
-        if ($this instanceof PatchInterface) {
+        if (!$this instanceof PatchInterface) {
             throw new RuntimeException('Payload must implement PatchInterface');
         }
 
-        $this->hydrate($patch);
-        return $this;
+        /** @var $this AbstractRequestPayload */
+        return $this->hydrate($patch, true);
     }
 
     /**
      * @param array<mixed> $values
+     * @param bool $isPatch
+     * @return $this
      */
-    protected function hydrate($values = []): void
+    protected function hydrate(array $values = [], bool $isPatch = false): self
     {
         $patchKeys = [];
 
         foreach ($values as $key => $value) {
-            if (!array_key_exists($key, $this->whitelist)) {
-                continue;
-            }
-
             if (array_key_exists($key, $this->overrides)) {
                 $key = $this->overrides[$key];
             }
 
-            $setter = "set" . str_replace(' ', '', ucwords(str_replace('_', ' ', $key)));
+            if (!in_array($key, $this->whitelist)) {
+                continue;
+            }
+
+            $setter = Str::setter($key);
 
             if (method_exists($this, $setter)) {
                 $this->{$setter}($value);
@@ -65,8 +77,10 @@ abstract class AbstractRequestPayload
             }
         }
 
-        if (method_exists($this, 'setPatch')) {
+        if ($this instanceof PatchInterface && $isPatch === true) {
             $this->setPatch($patchKeys);
         }
+
+        return $this;
     }
 }

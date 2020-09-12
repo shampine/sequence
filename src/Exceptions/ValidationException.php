@@ -20,6 +20,7 @@ class ValidationException extends Exception
 
         $this->setErrorCode($errorCode)
              ->setErrorMessages($errorMessages)
+             ->setErrorMessage('Validation error')
              ->setHttpCode($httpCode);
     }
 }

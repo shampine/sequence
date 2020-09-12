@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Shampine\Sequence\Payload;
+namespace Shampine\Sequence\Response;
 
 use Exception;
 use Shampine\Sequence\Exceptions\SequenceException;
 use Shampine\Sequence\Exceptions\ValidationException;
 
-class ErrorResponsePayload extends AbstractResponsePayload
+class ErrorResponse extends SuccessResponse
 {
     /**
      * @param Exception|null $exception
@@ -16,6 +16,7 @@ class ErrorResponsePayload extends AbstractResponsePayload
     {
         if ($exception instanceof ValidationException) {
             $this->setErrorMessages($exception->getErrorMessages())
+                 ->setMessage($exception->getErrorMessage())
                  ->setErrorCode($exception->getErrorCode())
                  ->setStatusCode($exception->getHttpCode());
         } elseif ($exception instanceof SequenceException) {

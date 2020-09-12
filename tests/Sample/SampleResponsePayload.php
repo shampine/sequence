@@ -13,6 +13,16 @@ class SampleResponsePayload extends AbstractResponsePayload
     protected string $sampleAbout = '';
 
     /**
+     * @var string|null
+     */
+    protected ?string $emptyValue = null;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $nullValue = null;
+
+    /**
      * @param SampleRequestPayload $payload
      */
     public function __construct(SampleRequestPayload $payload)
@@ -35,6 +45,42 @@ class SampleResponsePayload extends AbstractResponsePayload
     public function setSampleAbout(string $sampleAbout): self
     {
         $this->sampleAbout = $sampleAbout;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmptyValue(): ?string
+    {
+        return $this->emptyValue;
+    }
+
+    /**
+     * @param string|null $emptyValue
+     * @return $this
+     */
+    public function setEmptyValue(?string $emptyValue): self
+    {
+        $this->emptyValue = $emptyValue;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNullValue(): ?string
+    {
+        return $this->nullValue;
+    }
+
+    /**
+     * @param string|null $nullValue
+     * @return $this
+     */
+    public function setNullValue(?string $nullValue): self
+    {
+        $this->nullValue = $nullValue;
         return $this;
     }
 }

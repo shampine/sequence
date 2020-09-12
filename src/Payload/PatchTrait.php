@@ -11,12 +11,12 @@ trait PatchTrait
     protected bool $isPatch = false;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected array $patch = [];
 
     /**
-     * @return array
+     * @return array<string>
      */
     public function getPatch(): array
     {
@@ -24,7 +24,7 @@ trait PatchTrait
     }
 
     /**
-     * @param array $patch
+     * @param array<string> $patch
      * @return $this
      */
     public function setPatch(array $patch)

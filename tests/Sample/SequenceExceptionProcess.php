@@ -5,6 +5,7 @@ namespace Sample;
 
 use Shampine\Sequence\Exceptions\SequenceException;
 use Shampine\Sequence\Process\AbstractProcess;
+use Shampine\Sequence\Support\StatusCode;
 
 class SequenceExceptionProcess extends AbstractProcess
 {
@@ -29,7 +30,11 @@ class SequenceExceptionProcess extends AbstractProcess
     public function process($payload): SampleRequestPayload
     {
         if ($this->fail) {
-            throw new SequenceException();
+            throw new SequenceException(
+                6666,
+                'Something went horribly wrong',
+                StatusCode::INTERNAL_SERVER_ERROR
+            );
         }
 
         return $payload;

@@ -5,6 +5,7 @@ namespace Sample;
 
 use Shampine\Sequence\Exceptions\ValidationException;
 use Shampine\Sequence\Process\AbstractProcess;
+use Shampine\Sequence\Support\StatusCode;
 
 class ValidationExceptionProcess extends AbstractProcess
 {
@@ -29,7 +30,16 @@ class ValidationExceptionProcess extends AbstractProcess
     public function process($payload): SampleRequestPayload
     {
         if ($this->fail) {
-            throw new ValidationException();
+            throw new ValidationException(
+                9999,
+                [
+                    'error' => 'validation failed',
+                    'fields' => [
+                        'name' => 'undefined',
+                    ]
+                ],
+                StatusCode::BAD_REQUEST
+            );
         }
 
         return $payload;

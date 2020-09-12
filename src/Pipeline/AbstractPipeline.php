@@ -11,7 +11,9 @@ use Shampine\Sequence\Exceptions\SequenceException;
 use Shampine\Sequence\Exceptions\ValidationException;
 use Shampine\Sequence\Payload\AbstractRequestPayload;
 use Shampine\Sequence\Payload\AbstractResponsePayload;
-use Shampine\Sequence\Payload\ErrorResponsePayload;
+use Shampine\Sequence\Response\ErrorResponse;
+use Shampine\Sequence\Response\SuccessResponse;
+use Shampine\Sequence\Support\Str;
 
 abstract class AbstractPipeline
 {
@@ -21,19 +23,19 @@ abstract class AbstractPipeline
     protected array $pipelines = [];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected array $excludeWhenEmpty = [];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected array $excludeWhenNull = [];
 
     /**
-     * @var AbstractResponsePayload
+     * @var AbstractResponsePayload|ErrorResponse
      */
-    protected AbstractResponsePayload $responsePayload;
+    protected $responsePayload;
 
     /**
      * @param string $pipelineName
@@ -53,9 +55,9 @@ abstract class AbstractPipeline
         try {
             $responsePayload = $pipeline->process($requestPayload);
         } catch (ValidationException $validationException) {
-            $responsePayload = new ErrorResponsePayload($validationException);
+            $responsePayload = new ErrorResponse($validationException);
         } catch (SequenceException $sequenceException) {
-            $responsePayload = new ErrorResponsePayload($sequenceException);
+            $responsePayload = new ErrorResponse($sequenceException);
         }
 
         $this->responsePayload = $responsePayload;
@@ -64,39 +66,57 @@ abstract class AbstractPipeline
 
     /**
      * @param bool $useSnakeCase
-     * @return AbstractResponsePayload
+     * @return array<mixed>
      */
-    public function format(bool $useSnakeCase = false)
+    public function format(bool $useSnakeCase = true): array
     {
-        $reflectionClass = new ReflectionClass($this->responsePayload);
+        if ($this->responsePayload instanceof ErrorResponse) {
+            $response = $this->responsePayload;
+        } else {
+            $response = (new SuccessResponse())->setData(
+                $this->transform($this->responsePayload, $useSnakeCase)
+            );
+        }
+
+        return $this->transform($response, $useSnakeCase);
+    }
+
+    /**
+     * @param ErrorResponse|SuccessResponse|AbstractResponsePayload $class
+     * @param bool $useSnakeCase
+     * @return array<mixed>
+     */
+    protected function transform($class, bool $useSnakeCase = true): array
+    {
+        $reflectionClass = new ReflectionClass($class);
         $properties = $reflectionClass->getProperties();
+        $transformedClass = [];
 
         foreach ($properties as &$property) {
             $propertyName = $property->name;
+            $snakeCasePropertyName = Str::snakeCase($propertyName);
+            $transformKey = ($useSnakeCase) ? $snakeCasePropertyName : $propertyName;
+            $propertyValue = $class->{Str::getter($propertyName)}();
 
-
-            if (isset($this->excludeWhenEmpty[$propertyName]) && empty($this->responsePayload->{$propertyName})) {
-                unset($this->responsePayload->{$propertyName});
+            if (in_array($snakeCasePropertyName, $this->excludeWhenEmpty) && empty($propertyValue)) {
                 continue;
             }
 
-            if (isset($this->excludeWhenNull[$propertyName]) && $this->responsePayload->{$propertyName} === null) {
-                unset($this->responsePayload->{$propertyName});
+            if (in_array($snakeCasePropertyName, $this->excludeWhenNull) && $propertyValue === null) {
                 continue;
             }
 
-            if ($useSnakeCase === false) {
-                continue;
-            }
-
-            $propertySnakeCase = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $propertyName));
-
-            if ($propertySnakeCase !== $propertyName) {
-                $this->responsePayload->{$propertySnakeCase} = $this->responsePayload->{$propertyName};
-                unset($this->responsePayload->{$propertyName});
-            }
+            $transformedClass[$transformKey] = $propertyValue;
         }
 
+        return $transformedClass;
+    }
+
+    /**
+     * @return AbstractResponsePayload|ErrorResponse
+     */
+    public function getResponsePayload()
+    {
         return $this->responsePayload;
     }
 }

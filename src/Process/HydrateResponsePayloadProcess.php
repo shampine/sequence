@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Shampine\Sequence\Process;
 
-use Shampine\Sequence\Payload\AbstractRequestPayload;
 use Shampine\Sequence\Payload\AbstractResponsePayload;
 
 class HydrateResponsePayloadProcess extends AbstractProcess
@@ -22,10 +21,10 @@ class HydrateResponsePayloadProcess extends AbstractProcess
     }
 
     /**
-     * @param AbstractRequestPayload $payload
-     * @return AbstractResponsePayload
+     * @param mixed $payload
+     * @return mixed
      */
-    public function process($payload): AbstractResponsePayload
+    public function process($payload)
     {
         return new $this->responsePayload($payload);
     }
