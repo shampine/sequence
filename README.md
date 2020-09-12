@@ -13,9 +13,9 @@ These examples are using Laravel conventions but this package is framework agnos
 
 See these three files for verbose usage examples and live demos inside the phpunit tests.
 
-[Sample RequestPayload](https://github.com/shampine/sequence/blob/master/tests/Sample/SampleRequestPayload.php)
-[Sample ResponsePayload](https://github.com/shampine/sequence/blob/master/tests/Sample/SampleResponsePayload.php)
-[Sample Pipeline](https://github.com/shampine/sequence/blob/master/tests/Sample/SamplePipeline.php)
+[Sample RequestPayload](https://github.com/shampine/sequence/blob/master/tests/Sample/SampleRequestPayload.php)  
+[Sample ResponsePayload](https://github.com/shampine/sequence/blob/master/tests/Sample/SampleResponsePayload.php)  
+[Sample Pipeline](https://github.com/shampine/sequence/blob/master/tests/Sample/SamplePipeline.php)  
 
 ### Request Payloads
 
