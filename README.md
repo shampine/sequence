@@ -13,7 +13,7 @@ Benefits to using pipelines for an MVC framework include
 
  - skinny and consistent controllers  
  - ability to share processes amongst different pipelines
- - simple injection a service/repository classes into the processes to keep code clean
+ - simple injection of service or repository classes into the processes to keep code clean
  - ease of testing individual processes
  - clear, consistent api responses
  - eliminate need to try/catch exceptions inside the stack
