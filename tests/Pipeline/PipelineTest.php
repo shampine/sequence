@@ -91,9 +91,9 @@ class PipelineTest extends TestCase
     public function testSamplePipelineValidationFailure(): void
     {
         $payload = new SampleRequestPayload();
-        $pipeline = new SamplePipeline(true, false);
+        $pipeline = new SamplePipeline();
 
-        $response = $pipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload)->format();
+        $response = $pipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload, true, false)->format();
 
         self::assertIsArray($response);
         self::assertEquals(StatusCode::BAD_REQUEST, $response['status_code']);
@@ -118,9 +118,9 @@ class PipelineTest extends TestCase
     public function testSamplePipelineSequenceFailure(): void
     {
         $payload = new SampleRequestPayload();
-        $pipeline = new SamplePipeline(false, true);
+        $pipeline = new SamplePipeline();
 
-        $response = $pipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload)->format();
+        $response = $pipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload, false, true)->format();
 
         self::assertIsArray($response);
         self::assertEquals(StatusCode::INTERNAL_SERVER_ERROR, $response['status_code']);

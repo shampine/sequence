@@ -15,11 +15,18 @@ class ValidationExceptionProcess extends AbstractProcess
     protected bool $fail = false;
 
     /**
-     * @param bool $fail
+     * @var SampleUseService|null
      */
-    public function __construct(bool $fail = false)
+    protected ?SampleUseService $sampleUseService = null;
+
+    /**
+     * @param bool $fail
+     * @param SampleUseService|null $sampleUseService
+     */
+    public function __construct(bool $fail = false, ?SampleUseService $sampleUseService = null)
     {
         $this->fail = $fail;
+        $this->sampleUseService = $sampleUseService;
     }
 
     /**
