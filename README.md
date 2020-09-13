@@ -1,7 +1,19 @@
 # sequence
 ![example workflow name](https://github.com/shampine/sequence/workflows/Sequence%20Build/badge.svg)
 
-An end to end api pipeline package.
+An end to end api pipelining package.
+
+## why
+Over the last few years this pattern has enabled incredibly fast and highly tested development.
+
+Benefits to using pipelines for an MVC framework include
+
+ - skinny and consistent controllers  
+ - ability to share processes amongst different pipelines
+ - simple injection a service/repository classes into the processes to keep code clean
+ - ease of testing individual processes
+ - clear, consistent api responses
+ - eliminate need to try/catch exceptions inside the stack
 
 ## installation
 
@@ -19,7 +31,8 @@ See these three files for verbose usage examples and live demos inside the phpun
 
 ### Request Payloads
 
-@TODO
+This is the active workspace. The request payload is mutated as it passes thru each stage. Any data needed from one
+stage to another needs to be set on the payload, and then retrieved from the payload.
 
 When defining your RequestPayloads you can optionally define a `$whitelist` and `$overrides`.
 
@@ -27,15 +40,15 @@ When defining your RequestPayloads you can optionally define a `$whitelist` and 
 $payload = new SampleRequestPayload($whitelist, $overrides);
 ```
 
-The whitelist will limit what user supplied input will be hydrate into the RequestPayload. The overrides allows mapping
+The whitelist will limit what user supplied input will be hydrate into the RequestPayload. The overrides allow mapping
 of different external keys to internal keys. Example is that the post contains `email_address` but on the payload the 
 method is called `setEmail`. Mapping `['email_address' => 'email']` which properly align hydration.
 
 
-### Pipeline Instantiation
+### Pipeline Composition
 
-A pipeline can have multiple closures available. This will allow grouping of similars pipelines together. You can
-pass attributes into the pipeline either thru the class constructor OR the closure constructor.
+A pipeline can have multiple named closures stored in the `$pipelines` properties. This will allow grouping of similar
+pipelines together. You can pass attributes into the pipeline either thru the class constructor OR the closure constructor.
 
 Services, repositories, and other dependency injectable parameters are best set by using the class constructor. While
 flags and other stage related properties can be injected using `->process($pipelineName, $payload, ...$argments)`.
@@ -89,15 +102,17 @@ public function __construct(SampleRequestPayload $payload)
 
 During the format process `getSampleAbout` would be used to compile the final array that will be returned as json.
 
+### Controller Examples (Laravel)
 
-### Controller Instantiation
-
-Using Laravel dependency injection on your controller to instantiate the pipeline.
+Using dependency injection on your controller to instantiate the pipeline.
 
 ```
-public function __construct(SamplePipeline $samplePipeline)
+class SampleController
 {
-    $this-samplePipeline = $samplePipeline;
+    public function __construct(SamplePipeline $samplePipeline)
+    {
+        $this-samplePipeline = $samplePipeline;
+    }
 }
 ```
 
@@ -114,7 +129,7 @@ public function get(Request $request)
 
 #### POST
 ```
-public function get(Request $request)
+public function post(Request $request)
 {
     $payload = (new SampleRequestPayload())->hydratePost($request->all());
     $response = $this->samplePipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload)->format();
@@ -124,8 +139,11 @@ public function get(Request $request)
 ```
 
 #### PATCH
+Patch requests payloads require the `PatchInterface` and `PatchTrait`. The payload will contain methods to decipher what
+is requested to be patched `->getPatch()` and whether the payload is a patch request `->isPatch()`.
+
 ```
-public function get(Request $request)
+public function patch(Request $request)
 {
     $payload = (new SampleRequestPayload())->hydratePatch($request->all());
     $response = $this->samplePipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload)->format();
@@ -133,6 +151,45 @@ public function get(Request $request)
     return response()->json($response, $responde['http_code']);
 }
 ```
+
+### Exceptions
+
+Included are two exceptions, ValidationException and SequenceException. Both are caught and rendered to json. You can
+define specific exception by extending these classes. They are caught and rendered the same as a normal payload to easily
+allow json to be return.
+
+```
+class Fetchuser extends AbstractProcess
+{
+    public function process()
+    {
+        $user = $this->userService->getUserRepository()->fetchUserById($id);
+
+        if ($user === null) {
+            throw new SequenceException(1000, 'User not found', 400);
+        }
+    
+        $payload->setUser($user);
+
+        return $payload;
+    }
+}
+```
+
+A null user returns
+
+```
+array(5) {
+  'error_code' => int(1000)
+  'status_code' => int(400)
+  'data' => NULL
+  'message' => string(29) 'User not found'
+  'error_messages' => NULL
+}
+```
+
+This should allow a consistent api returns without the need for try catch. Any standard php exception will fatal the
+application like normal.
 
 ## testing
 
