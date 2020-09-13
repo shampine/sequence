@@ -7,7 +7,7 @@ A framework agnostic pipelining package to handle complete requests.
 
 This pattern can enable incredibly fast and highly tested development.
 
-![pipeline diagram](https://github.com/shampine/sequence/tree/issue-3-readme_updates/diagram.png)
+![pipeline diagram](https://raw.githubusercontent.com/shampine/sequence/issue-3-readme_updates/diagram.png)
 
 Benefits to using pipelines for an MVC framework include
 
