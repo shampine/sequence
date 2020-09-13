@@ -8,7 +8,7 @@ A framework agnostic pipelining package to handle complete requests.
 
 ## why
 
-This pattern can enable incredibly fast and highly tested development.
+Using the pipeline pattern developers can move quickly, recycle processes, and test everything.
 
 ![pipeline diagram](https://raw.githubusercontent.com/shampine/sequence/master/diagram.png)
 
