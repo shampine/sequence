@@ -1,10 +1,13 @@
 # sequence
 ![example workflow name](https://github.com/shampine/sequence/workflows/Sequence%20Build/badge.svg)
 
-An end to end api pipelining package.
+A framework agnostic pipelining package to handle complete requests.
 
 ## why
-Over the last few years this pattern has enabled incredibly fast and highly tested development.
+
+This pattern can enable incredibly fast and highly tested development.
+
+![pipeline diagram](https://github.com/shampine/sequence/tree/issue-3-readme_updates/diagram.png)
 
 Benefits to using pipelines for an MVC framework include
 
@@ -40,18 +43,20 @@ When defining your RequestPayloads you can optionally define a `$whitelist` and 
 $payload = new SampleRequestPayload($whitelist, $overrides);
 ```
 
-The whitelist will limit what user supplied input will be hydrate into the RequestPayload. The overrides allow mapping
-of different external keys to internal keys. Example is that the post contains `email_address` but on the payload the 
-method is called `setEmail`. Mapping `['email_address' => 'email']` which properly align hydration.
-
+A whitelist will limit what user supplied input will be hydrated into the RequestPayload. The overrides parameter allows
+mapping of different external keys to internal keys. E.g. if the post contains `email_address` but on the payload the 
+method is called `setEmail`. Mapping `['email_address' => 'email']` will properly align hydration.
 
 ### Pipeline Composition
 
-A pipeline can have multiple named closures stored in the `$pipelines` properties. This will allow grouping of similar
+A pipeline can have multiple named closures stored in the `$pipelines` property. This will allow grouping of similar
 pipelines together. You can pass attributes into the pipeline either thru the class constructor OR the closure constructor.
 
 Services, repositories, and other dependency injectable parameters are best set by using the class constructor. While
 flags and other stage related properties can be injected using `->process($pipelineName, $payload, ...$argments)`.
+
+This example pipeline has a service injected into the constructor but two boolean flags passed through the $arguments
+parameter on `->process()`.
 
 ```
 class SamplePipeline extends AbstractPipeline
