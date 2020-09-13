@@ -3,6 +3,9 @@
 
 A framework agnostic pipelining package to handle complete requests.
 
+[Laravel Demo - https://github.com/shampine/sequence-demo](https://github.com/shampine/sequence-demo)  
+[Tutorial - https://medium.com/gosteady/day-5-sequence-how-to-guide-56c0af1b2303](https://medium.com/gosteady/day-5-sequence-how-to-guide-56c0af1b2303)  
+
 ## why
 
 This pattern can enable incredibly fast and highly tested development.
