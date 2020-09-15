@@ -42,7 +42,7 @@ stage to another needs to be set on the payload, and then retrieved from the pay
 
 When defining your RequestPayloads you can optionally define a `$whitelist` and `$overrides`.
 
-```
+```php
 $payload = new SampleRequestPayload($whitelist, $overrides);
 ```
 
@@ -61,7 +61,7 @@ flags and other stage related properties can be injected using `->process($pipel
 This example pipeline has a service injected into the constructor but two boolean flags passed through the $arguments
 parameter on `->process()`.
 
-```
+```php
 class SamplePipeline extends AbstractPipeline
 {
     public const SAMPLE_PIPELINE = 'SamplePipeline';
@@ -100,8 +100,7 @@ The property `$excludeWhenEmpty` or `$excludeWhenNull` will check ANY root or da
 Response payloads are the final output containers and should be hydrated in the final stage of a pipeline. All properties
 on the class are REQUIRED to have a getter and setter.
 
-```
-
+```php
 public function __construct(SampleRequestPayload $payload)
 {
     $this->setSampleAbout('This is an about statement.');
@@ -114,7 +113,7 @@ During the format process `getSampleAbout` would be used to compile the final ar
 
 Using dependency injection on your controller to instantiate the pipeline.
 
-```
+```php
 class SampleController
 {
     public function __construct(SamplePipeline $samplePipeline)
@@ -125,7 +124,8 @@ class SampleController
 ```
 
 #### GET
-```
+
+```php
 public function get(Request $request)
 {
     $payload = new SampleRequestPayload();
@@ -136,7 +136,8 @@ public function get(Request $request)
 ```
 
 #### POST
-```
+
+```php
 public function post(Request $request)
 {
     $payload = (new SampleRequestPayload())->hydratePost($request->all());
@@ -150,7 +151,7 @@ public function post(Request $request)
 Patch requests payloads require the `PatchInterface` and `PatchTrait`. The payload will contain methods to decipher what
 is requested to be patched `->getPatch()` and whether the payload is a patch request `->isPatch()`.
 
-```
+```php
 public function patch(Request $request)
 {
     $payload = (new SampleRequestPayload())->hydratePatch($request->all());
@@ -166,7 +167,7 @@ Included are two exceptions, ValidationException and SequenceException. Both are
 define specific exception by extending these classes. They are caught and rendered the same as a normal payload to easily
 allow json to be return.
 
-```
+```php
 class Fetchuser extends AbstractProcess
 {
     public function process()
@@ -186,7 +187,7 @@ class Fetchuser extends AbstractProcess
 
 A null user returns
 
-```
+```php
 array(5) {
   'error_code' => int(1000)
   'status_code' => int(400)
