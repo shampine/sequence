@@ -35,25 +35,28 @@ See these three files for verbose usage examples and live demos inside the phpun
 [Sample ResponsePayload](https://github.com/shampine/sequence/blob/master/tests/Sample/SampleResponsePayload.php)  
 [Sample Pipeline](https://github.com/shampine/sequence/blob/master/tests/Sample/SamplePipeline.php)  
 
-### Request Payloads
+### Payloads
 
-This is the active workspace. The request payload is mutated as it passes thru each stage. Any data needed from one
+This is the active workspace. The payload is mutated as it passes thru each stage. Any data needed from one
 stage to another needs to be set on the payload, and then retrieved from the payload.
 
-When defining your RequestPayloads you can optionally define a `$whitelist` and `$overrides`.
+When defining your Payloads you can optionally define a `$whitelist` and `$overrides`.
 
 ```php
-$payload = new SampleRequestPayload($whitelist, $overrides);
+$whitelist = ['email']; // Only hydrate `email` from post/patch
+$overrides = ['email_address' => 'email']; // Allows `email_address` to be hydrated as `email`
+$payload = new \Sample\SamplePayload($whitelist, $overrides);
 ```
 
-A whitelist will limit what user supplied input will be hydrated into the RequestPayload. The overrides parameter allows
+A whitelist will limit what user supplied input will be hydrated into the Payload. The overrides parameter allows
 mapping of different external keys to internal keys. E.g. if the post contains `email_address` but on the payload the 
 method is called `setEmail`. Mapping `['email_address' => 'email']` will properly align hydration.
 
 ### Pipeline Composition
 
 A pipeline can have multiple named closures stored in the `$pipelines` property. This will allow grouping of similar
-pipelines together. You can pass attributes into the pipeline either thru the class constructor OR the closure constructor.
+pipelines together, e.g. GET, POST, PATCH, DELETE pipelines. You can pass attributes into the pipeline either thru the
+class constructor OR the closure constructor.
 
 Services, repositories, and other dependency injectable parameters are best set by using the class constructor. While
 flags and other stage related properties can be injected using `->process($pipelineName, $payload, ...$argments)`.
@@ -95,13 +98,13 @@ class SamplePipeline extends AbstractPipeline
 The property `$excludeWhenEmpty` or `$excludeWhenNull` will check ANY root or data keys to see if their value is
 `empty()` or `=== null`. If so they are excluded from the final array, all keys should use `snake_case`.
 
-### Response Payloads
+### Response
 
-Response payloads are the final output containers and should be hydrated in the final stage of a pipeline. All properties
-on the class are REQUIRED to have a getter and setter.
+Responses are the final output containers and should be hydrated in the final stage of a pipeline. All properties
+on the class can have a getter, but if they do not the property will be magically accessed.
 
 ```php
-public function __construct(SampleRequestPayload $payload)
+public function __construct(SamplePayload $payload)
 {
     $this->setSampleAbout('This is an about statement.');
 }
@@ -128,10 +131,10 @@ class SampleController
 ```php
 public function get(Request $request)
 {
-    $payload = new SampleRequestPayload();
+    $payload = new SamplePayload();
     $response = $this->samplePipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload)->format();
 
-    return response()->json($response, $responde['http_code']);
+    return response()->json($response, $response['http_code']);
 }
 ```
 
@@ -140,10 +143,10 @@ public function get(Request $request)
 ```php
 public function post(Request $request)
 {
-    $payload = (new SampleRequestPayload())->hydratePost($request->all());
+    $payload = (new SamplePayload())->hydratePost($request->all());
     $response = $this->samplePipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload)->format();
 
-    return response()->json($response, $responde['http_code']);
+    return response()->json($response, $response['http_code']);
 }
 ```
 
@@ -154,10 +157,10 @@ is requested to be patched `->getPatch()` and whether the payload is a patch req
 ```php
 public function patch(Request $request)
 {
-    $payload = (new SampleRequestPayload())->hydratePatch($request->all());
+    $payload = (new SamplePayload())->hydratePatch($request->all());
     $response = $this->samplePipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload)->format();
 
-    return response()->json($response, $responde['http_code']);
+    return response()->json($response, $response['http_code']);
 }
 ```
 
@@ -168,11 +171,11 @@ define specific exception by extending these classes. They are caught and render
 allow json to be return.
 
 ```php
-class Fetchuser extends AbstractProcess
+class FetchUser extends AbstractProcess
 {
-    public function process()
+    public function process($payload)
     {
-        $user = $this->userService->getUserRepository()->fetchUserById($id);
+        $user = $this->userService->getUserRepository()->fetchUserById($payload->getId());
 
         if ($user === null) {
             throw new SequenceException(1000, 'User not found', 400);
@@ -187,18 +190,18 @@ class Fetchuser extends AbstractProcess
 
 A null user returns
 
-```php
-array(5) {
-  'error_code' => int(1000)
-  'status_code' => int(400)
-  'data' => NULL
-  'message' => string(29) 'User not found'
-  'error_messages' => NULL
+```json
+{
+  "error_code": 1000,
+  "status_code": 400,
+  "data": null,
+  "message": "User not found",
+  "error_messages": null
 }
 ```
 
-This should allow a consistent api returns without the need for try catch. Any standard php exception will fatal the
-application like normal.
+Any standard php exception will fatal the application like normal. Logging should exist in a constructor of an exception
+class that extends ValidationException or SequenceException.
 
 ## testing
 
