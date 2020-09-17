@@ -23,6 +23,11 @@ class SampleResponsePayload extends AbstractResponsePayload
     protected ?string $nullValue = null;
 
     /**
+     * @var string|null
+     */
+    protected ?string $noGetterTestValue = 'noGetterTestValue';
+
+    /**
      * @param SampleRequestPayload $payload
      */
     public function __construct(SampleRequestPayload $payload)

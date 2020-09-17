@@ -96,7 +96,7 @@ abstract class AbstractPipeline
             $propertyName = $property->name;
             $snakeCasePropertyName = Str::snakeCase($propertyName);
             $transformKey = ($useSnakeCase) ? $snakeCasePropertyName : $propertyName;
-            $propertyValue = $class->{Str::getter($propertyName)}();
+            $propertyValue = $class->{$propertyName};
 
             if (in_array($snakeCasePropertyName, $this->excludeWhenEmpty) && empty($propertyValue)) {
                 continue;

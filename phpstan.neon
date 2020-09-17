@@ -3,3 +3,7 @@ parameters:
   paths:
     - src
     - tests
+  ignoreErrors:
+    - '#Access to protected property Sample\\SampleResponsePayload::\$sampleAbout\.#'
+    - '#Access to protected property Sample\\SampleResponsePayload::\$noGetterTestValue\.#'
+    - '#Access to an undefined property Sample\\SampleResponsePayload::\$noProperty\.#'

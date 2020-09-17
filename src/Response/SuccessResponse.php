@@ -7,6 +7,8 @@ use Shampine\Sequence\Support\StatusCode;
 
 class SuccessResponse
 {
+    use GetterTrait;
+
     /**
      * @var int|null $errorCode
      */
