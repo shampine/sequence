@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Sample;
 
-use Shampine\Sequence\Payload\AbstractRequestPayload;
+use Shampine\Sequence\Payload\AbstractPayload;
 use Shampine\Sequence\Payload\PatchInterface;
 use Shampine\Sequence\Payload\PatchTrait;
 
-class SampleRequestPayload extends AbstractRequestPayload implements PatchInterface
+class SamplePayload extends AbstractPayload implements PatchInterface
 {
     use PatchTrait;
 

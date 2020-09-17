@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Shampine\Sequence\Process;
 
-use Shampine\Sequence\Payload\AbstractResponsePayload;
+use Shampine\Sequence\Payload\AbstractResponse;
 
 class HydrateResponsePayloadProcess extends AbstractProcess
 {

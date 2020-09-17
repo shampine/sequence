@@ -9,10 +9,10 @@ use League\Pipeline\Pipeline;
 use ReflectionClass;
 use Shampine\Sequence\Exceptions\SequenceException;
 use Shampine\Sequence\Exceptions\ValidationException;
-use Shampine\Sequence\Payload\AbstractRequestPayload;
-use Shampine\Sequence\Payload\AbstractResponsePayload;
-use Shampine\Sequence\Response\ErrorResponse;
-use Shampine\Sequence\Response\SuccessResponse;
+use Shampine\Sequence\Payload\AbstractPayload;
+use Shampine\Sequence\Response\AbstractResponse;
+use Shampine\Sequence\Response\ErrorResponseWrapperWrapper;
+use Shampine\Sequence\Response\SuccessResponseWrapper;
 use Shampine\Sequence\Support\Str;
 
 abstract class AbstractPipeline
@@ -33,17 +33,17 @@ abstract class AbstractPipeline
     protected array $excludeWhenNull = [];
 
     /**
-     * @var AbstractResponsePayload|ErrorResponse
+     * @var AbstractResponse|ErrorResponseWrapperWrapper
      */
     protected $responsePayload;
 
     /**
      * @param string $pipelineName
-     * @param AbstractRequestPayload $requestPayload
+     * @param AbstractPayload $requestPayload
      * @param mixed ...$arguments
      * @return $this
      */
-    public function process(string $pipelineName, AbstractRequestPayload $requestPayload, ...$arguments): self
+    public function process(string $pipelineName, AbstractPayload $requestPayload, ...$arguments): self
     {
         if (!isset($this->pipelines[$pipelineName])) {
             throw new BadFunctionCallException('Pipeline name provided does not exist in pipelines.');
@@ -55,9 +55,9 @@ abstract class AbstractPipeline
         try {
             $responsePayload = $pipeline->process($requestPayload);
         } catch (ValidationException $validationException) {
-            $responsePayload = new ErrorResponse($validationException);
+            $responsePayload = new ErrorResponseWrapperWrapper($validationException);
         } catch (SequenceException $sequenceException) {
-            $responsePayload = new ErrorResponse($sequenceException);
+            $responsePayload = new ErrorResponseWrapperWrapper($sequenceException);
         }
 
         $this->responsePayload = $responsePayload;
@@ -70,10 +70,10 @@ abstract class AbstractPipeline
      */
     public function format(bool $useSnakeCase = true): array
     {
-        if ($this->responsePayload instanceof ErrorResponse) {
+        if ($this->responsePayload instanceof ErrorResponseWrapperWrapper) {
             $response = $this->responsePayload;
         } else {
-            $response = (new SuccessResponse())->setData(
+            $response = (new SuccessResponseWrapper())->setData(
                 $this->transform($this->responsePayload, $useSnakeCase)
             );
         }
@@ -82,7 +82,7 @@ abstract class AbstractPipeline
     }
 
     /**
-     * @param ErrorResponse|SuccessResponse|AbstractResponsePayload $class
+     * @param ErrorResponseWrapperWrapper|SuccessResponseWrapper|AbstractResponse $class
      * @param bool $useSnakeCase
      * @return array<mixed>
      */
@@ -113,7 +113,7 @@ abstract class AbstractPipeline
     }
 
     /**
-     * @return AbstractResponsePayload|ErrorResponse
+     * @return AbstractResponse|ErrorResponseWrapperWrapper
      */
     public function getResponsePayload()
     {
