@@ -20,7 +20,7 @@ jobs:
 #           ${{ runner.os }}-php-
 
     - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
+#       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --dev --prefer-dist --no-progress --no-suggest
 
     - name: Run test suite
