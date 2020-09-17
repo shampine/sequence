@@ -6,8 +6,8 @@ namespace Pipeline;
 use BadFunctionCallException;
 use PHPUnit\Framework\TestCase;
 use Sample\SamplePipeline;
-use Sample\SampleRequestPayload;
-use Shampine\Sequence\Payload\AbstractResponsePayload;
+use Sample\SamplePayload;
+use Shampine\Sequence\Response\AbstractResponse;
 use Shampine\Sequence\Support\StatusCode;
 
 class PipelineTest extends TestCase
@@ -19,7 +19,7 @@ class PipelineTest extends TestCase
     {
         self::expectException(BadFunctionCallException::class);
 
-        $payload = new SampleRequestPayload();
+        $payload = new SamplePayload();
         (new SamplePipeline())->process('DoesNotExist', $payload);
     }
 
@@ -28,7 +28,7 @@ class PipelineTest extends TestCase
      */
     public function testSamplePipelineSuccess(): void
     {
-        $payload = new SampleRequestPayload();
+        $payload = new SamplePayload();
         $pipeline = new SamplePipeline();
 
         $response = $pipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload)->format();
@@ -46,7 +46,7 @@ class PipelineTest extends TestCase
      */
     public function testSamplePipelineSuccessExcludeEmpty(): void
     {
-        $payload = new SampleRequestPayload();
+        $payload = new SamplePayload();
         $pipeline = new SamplePipeline();
 
         $response = $pipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload)->format();
@@ -59,7 +59,7 @@ class PipelineTest extends TestCase
      */
     public function testSamplePipelineSuccessExcludeNull(): void
     {
-        $payload = new SampleRequestPayload();
+        $payload = new SamplePayload();
         $pipeline = new SamplePipeline();
 
         $response = $pipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload)->format();
@@ -72,7 +72,7 @@ class PipelineTest extends TestCase
      */
     public function testSamplePipelineSuccessCamelCase(): void
     {
-        $payload = new SampleRequestPayload();
+        $payload = new SamplePayload();
         $pipeline = new SamplePipeline();
 
         $response = $pipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload)->format(false);
@@ -90,7 +90,7 @@ class PipelineTest extends TestCase
      */
     public function testSamplePipelineValidationFailure(): void
     {
-        $payload = new SampleRequestPayload();
+        $payload = new SamplePayload();
         $pipeline = new SamplePipeline();
 
         $response = $pipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload, true, false)->format();
@@ -117,7 +117,7 @@ class PipelineTest extends TestCase
      */
     public function testSamplePipelineSequenceFailure(): void
     {
-        $payload = new SampleRequestPayload();
+        $payload = new SamplePayload();
         $pipeline = new SamplePipeline();
 
         $response = $pipeline->process(SamplePipeline::SAMPLE_PIPELINE, $payload, false, true)->format();
@@ -135,9 +135,9 @@ class PipelineTest extends TestCase
      */
     public function testGetResponsePayload(): void
     {
-        $payload = new SampleRequestPayload();
+        $payload = new SamplePayload();
         $pipeline = (new SamplePipeline())->process(SamplePipeline::SAMPLE_PIPELINE, $payload);
 
-        $this->assertInstanceOf(AbstractResponsePayload::class, $pipeline->getResponsePayload());
+        $this->assertInstanceOf(AbstractResponse::class, $pipeline->getResponsePayload());
     }
 }

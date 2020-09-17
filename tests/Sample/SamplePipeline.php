@@ -28,7 +28,7 @@ class SamplePipeline extends AbstractPipeline
                 return (new Pipeline)
                     ->pipe(new ValidationExceptionProcess($validationFailure, $sampleUseService))
                     ->pipe(new SequenceExceptionProcess($sequenceFailure))
-                    ->pipe(new HydrateResponsePayloadProcess(SampleResponsePayload::class));
+                    ->pipe(new HydrateResponsePayloadProcess(SampleResponse::class));
             }
         ];
 

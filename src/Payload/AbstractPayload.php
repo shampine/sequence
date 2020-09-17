@@ -6,7 +6,7 @@ namespace Shampine\Sequence\Payload;
 use RuntimeException;
 use Shampine\Sequence\Support\Str;
 
-abstract class AbstractRequestPayload
+abstract class AbstractPayload
 {
     /**
      * @var array<string>
@@ -47,7 +47,7 @@ abstract class AbstractRequestPayload
             throw new RuntimeException('Payload must implement PatchInterface');
         }
 
-        /** @var $this AbstractRequestPayload */
+        /** @var $this AbstractPayload */
         return $this->hydrate($patch, true);
     }
 

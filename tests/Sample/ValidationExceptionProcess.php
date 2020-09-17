@@ -30,11 +30,11 @@ class ValidationExceptionProcess extends AbstractProcess
     }
 
     /**
-     * @param SampleRequestPayload $payload
-     * @return SampleRequestPayload
+     * @param SamplePayload $payload
+     * @return SamplePayload
      * @throws ValidationException
      */
-    public function process($payload): SampleRequestPayload
+    public function process($payload): SamplePayload
     {
         if ($this->fail) {
             throw new ValidationException(

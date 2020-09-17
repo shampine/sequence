@@ -7,7 +7,7 @@ use Exception;
 use Shampine\Sequence\Exceptions\SequenceException;
 use Shampine\Sequence\Exceptions\ValidationException;
 
-class ErrorResponse extends SuccessResponse
+class ErrorResponseWrapperWrapper extends SuccessResponseWrapper
 {
     /**
      * @param Exception|null $exception

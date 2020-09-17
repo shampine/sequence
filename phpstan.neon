@@ -4,6 +4,6 @@ parameters:
     - src
     - tests
   ignoreErrors:
-    - '#Access to protected property Sample\\SampleResponsePayload::\$sampleAbout\.#'
-    - '#Access to protected property Sample\\SampleResponsePayload::\$noGetterTestValue\.#'
-    - '#Access to an undefined property Sample\\SampleResponsePayload::\$noProperty\.#'
+    - '#Access to protected property Sample\\SampleResponse::\$sampleAbout\.#'
+    - '#Access to protected property Sample\\SampleResponse::\$noGetterTestValue\.#'
+    - '#Access to an undefined property Sample\\SampleResponse::\$noProperty\.#'

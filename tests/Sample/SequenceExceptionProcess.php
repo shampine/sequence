@@ -23,11 +23,11 @@ class SequenceExceptionProcess extends AbstractProcess
     }
 
     /**
-     * @param SampleRequestPayload $payload
-     * @return SampleRequestPayload
+     * @param SamplePayload $payload
+     * @return SamplePayload
      * @throws SequenceException
      */
-    public function process($payload): SampleRequestPayload
+    public function process($payload): SamplePayload
     {
         if ($this->fail) {
             throw new SequenceException(

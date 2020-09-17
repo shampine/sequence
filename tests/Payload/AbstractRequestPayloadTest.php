@@ -5,8 +5,8 @@ namespace Payload;
 
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use Sample\SampleNoPatchInterfaceRequestPayload;
-use Sample\SampleRequestPayload;
+use Sample\SampleNoPatchInterfacePayload;
+use Sample\SamplePayload;
 
 class AbstractRequestPayloadTest extends TestCase
 {
@@ -15,7 +15,7 @@ class AbstractRequestPayloadTest extends TestCase
      */
     public function testPost(): void
     {
-        $payload = (new SampleRequestPayload(SampleRequestPayload::WHITELIST))->hydratePost(
+        $payload = (new SamplePayload(SamplePayload::WHITELIST))->hydratePost(
             [
                 'name' => 'Maxwell Namerson',
                 'age' => 21,
@@ -36,7 +36,7 @@ class AbstractRequestPayloadTest extends TestCase
     {
         self::expectException(RuntimeException::class);
 
-        (new SampleNoPatchInterfaceRequestPayload())->hydratePatch();
+        (new SampleNoPatchInterfacePayload())->hydratePatch();
     }
 
     /**
@@ -44,7 +44,7 @@ class AbstractRequestPayloadTest extends TestCase
      */
     public function testPatch(): void
     {
-        $payload = (new SampleRequestPayload(SampleRequestPayload::WHITELIST))->hydratePatch(
+        $payload = (new SamplePayload(SamplePayload::WHITELIST))->hydratePatch(
             [
                 'name' => 'Maxwell Namerson',
                 'age' => 21,
@@ -63,7 +63,7 @@ class AbstractRequestPayloadTest extends TestCase
      */
     public function testWhitelist(): void
     {
-        $payload = (new SampleRequestPayload(['name']))->hydratePost(
+        $payload = (new SamplePayload(['name']))->hydratePost(
             [
                 'name' => 'Maxwell Namerson',
                 'age' => 21,
@@ -80,7 +80,7 @@ class AbstractRequestPayloadTest extends TestCase
      */
     public function testOverrides(): void
     {
-        $payload = new SampleRequestPayload(SampleRequestPayload::WHITELIST, SampleRequestPayload::OVERRIDES);
+        $payload = new SamplePayload(SamplePayload::WHITELIST, SamplePayload::OVERRIDES);
         $payload->hydratePost(
             [
                 'name' => 'Maxwell Namerson',

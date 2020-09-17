@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Sample;
 
-use Shampine\Sequence\Payload\AbstractResponsePayload;
+use Shampine\Sequence\Response\AbstractResponse;
 
-class SampleResponsePayload extends AbstractResponsePayload
+class SampleResponse extends AbstractResponse
 {
     /**
      * @var string
@@ -28,9 +28,9 @@ class SampleResponsePayload extends AbstractResponsePayload
     protected ?string $noGetterTestValue = 'noGetterTestValue';
 
     /**
-     * @param SampleRequestPayload $payload
+     * @param SamplePayload $payload
      */
-    public function __construct(SampleRequestPayload $payload)
+    public function __construct(SamplePayload $payload)
     {
         $this->setSampleAbout($payload->getName() . ' is ' . $payload->getAge() . ' years old.');
     }

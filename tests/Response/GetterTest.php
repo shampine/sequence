@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Response;
 
 use PHPUnit\Framework\TestCase;
-use Sample\SampleRequestPayload;
-use Sample\SampleResponsePayload;
+use Sample\SamplePayload;
+use Sample\SampleResponse;
 
 class GetterTest extends TestCase
 {
@@ -14,10 +14,10 @@ class GetterTest extends TestCase
      */
     public function testGetter(): void
     {
-        $payload = new SampleRequestPayload();
+        $payload = new SamplePayload();
         $payload->setAge(21);
         $payload->setName('Maxwell');
-        $response = new SampleResponsePayload($payload);
+        $response = new SampleResponse($payload);
 
         echo $response->getSampleAbout();
 

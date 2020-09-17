@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Process;
 
 use PHPUnit\Framework\TestCase;
-use Sample\SampleRequestPayload;
-use Sample\SampleResponsePayload;
+use Sample\SamplePayload;
+use Sample\SampleResponse;
 use Shampine\Sequence\Process\HydrateResponsePayloadProcess;
 
 class AbstractProcessTest extends TestCase
@@ -15,9 +15,9 @@ class AbstractProcessTest extends TestCase
      */
     public function testInvoke(): void
     {
-        $process = new HydrateResponsePayloadProcess(SampleResponsePayload::class);
+        $process = new HydrateResponsePayloadProcess(SampleResponse::class);
 
         $this->assertInstanceOf(HydrateResponsePayloadProcess::class, $process);
-        $this->assertInstanceOf(SampleResponsePayload::class, $process->__invoke(new SampleRequestPayload()));
+        $this->assertInstanceOf(SampleResponse::class, $process->__invoke(new SamplePayload()));
     }
 }
