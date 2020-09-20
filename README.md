@@ -32,7 +32,7 @@ These examples are using Laravel conventions but this package is framework agnos
 See these three files for verbose usage examples and live demos inside the phpunit tests.
 
 [Sample Payload](https://github.com/shampine/sequence/blob/master/tests/Sample/SamplePayload.php)  
-[Sample Response](https://github.com/shampine/sequence/blob/master/tests/Sample/SamplePayload.php)  
+[Sample Response](https://github.com/shampine/sequence/blob/master/tests/Sample/SampleResponse.php)  
 [Sample Pipeline](https://github.com/shampine/sequence/blob/master/tests/Sample/SamplePipeline.php)  
 
 ### Payloads
