@@ -1,7 +1,7 @@
 # sequence
 ![example workflow name](https://github.com/shampine/sequence/workflows/Sequence%20Build/badge.svg)
 
-A framework agnostic pipelining package to handle complete requests.
+A framework agnostic pipelining package to handle complete requests built on [The PHP League Pipeline Package](https://github.com/thephpleague/pipeline).
 
 [Laravel Demo - https://github.com/shampine/sequence-demo](https://github.com/shampine/sequence-demo)  
 [Tutorial - https://medium.com/gosteady/day-5-sequence-how-to-guide-56c0af1b2303](https://medium.com/gosteady/day-5-sequence-how-to-guide-56c0af1b2303)  
