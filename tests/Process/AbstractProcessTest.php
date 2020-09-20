@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Process;
+namespace Shampine\Tests\Process;
 
 use PHPUnit\Framework\TestCase;
-use Sample\SamplePayload;
-use Sample\SampleResponse;
 use Shampine\Sequence\Process\HydrateResponsePayloadProcess;
+use Shampine\Tests\Sample\SamplePayload;
+use Shampine\Tests\Sample\SampleResponse;
 
 class AbstractProcessTest extends TestCase
 {

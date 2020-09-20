@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Response;
+namespace Shampine\Tests\Response;
 
 use PHPUnit\Framework\TestCase;
-use Sample\SamplePayload;
-use Sample\SampleResponse;
+use Shampine\Tests\Sample\SamplePayload;
+use Shampine\Tests\Sample\SampleResponse;
 
 class GetterTest extends TestCase
 {

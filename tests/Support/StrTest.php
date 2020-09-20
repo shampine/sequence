@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Support;
+namespace Shampine\Tests\Support;
 
 use PHPUnit\Framework\TestCase;
 use Shampine\Sequence\Support\Str;

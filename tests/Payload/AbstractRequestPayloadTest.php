@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Payload;
+namespace Shampine\Tests\Payload;
 
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use Sample\SampleNoPatchInterfacePayload;
-use Sample\SamplePayload;
+use Shampine\Tests\Sample\SampleNoPatchInterfacePayload;
+use Shampine\Tests\Sample\SamplePayload;
 
 class AbstractRequestPayloadTest extends TestCase
 {

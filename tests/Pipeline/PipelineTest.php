@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Pipeline;
+namespace Shampine\Tests\Pipeline;
 
 use BadFunctionCallException;
 use PHPUnit\Framework\TestCase;
-use Sample\SamplePipeline;
-use Sample\SamplePayload;
 use Shampine\Sequence\Response\AbstractResponse;
 use Shampine\Sequence\Support\StatusCode;
+use Shampine\Tests\Sample\SamplePipeline;
+use Shampine\Tests\Sample\SamplePayload;
 
 class PipelineTest extends TestCase
 {

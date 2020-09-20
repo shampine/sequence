@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Sample;
+namespace Shampine\Tests\Sample;
 
 use Shampine\Sequence\Exceptions\SequenceException;
 use Shampine\Sequence\Process\AbstractProcess;

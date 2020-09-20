@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Sample;
+namespace Shampine\Tests\Sample;
 
 use League\Pipeline\Pipeline;
 use Shampine\Sequence\Pipeline\AbstractPipeline;
