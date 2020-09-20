@@ -4,6 +4,6 @@ parameters:
     - src
     - tests
   ignoreErrors:
-    - '#Access to protected property Sample\\SampleResponse::\$sampleAbout\.#'
-    - '#Access to protected property Sample\\SampleResponse::\$noGetterTestValue\.#'
-    - '#Access to an undefined property Sample\\SampleResponse::\$noProperty\.#'
+    - '#Access to protected property Shampine\\Tests\\Sample\\SampleResponse::\$sampleAbout\.#'
+    - '#Access to protected property Shampine\\Tests\\Sample\\SampleResponse::\$noGetterTestValue\.#'
+    - '#Access to an undefined property Shampine\\Tests\\Sample\\SampleResponse::\$noProperty\.#'

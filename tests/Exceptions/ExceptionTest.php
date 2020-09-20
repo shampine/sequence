@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Exceptions;
+namespace Shampine\Tests\Exceptions;
 
 use PHPUnit\Framework\TestCase;
 use Shampine\Sequence\Exceptions\SequenceException;
