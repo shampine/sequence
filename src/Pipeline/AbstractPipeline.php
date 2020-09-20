@@ -11,7 +11,7 @@ use Shampine\Sequence\Exceptions\SequenceException;
 use Shampine\Sequence\Exceptions\ValidationException;
 use Shampine\Sequence\Payload\AbstractPayload;
 use Shampine\Sequence\Response\AbstractResponse;
-use Shampine\Sequence\Response\ErrorResponseWrapperWrapper;
+use Shampine\Sequence\Response\ErrorResponseWrapper;
 use Shampine\Sequence\Response\SuccessResponseWrapper;
 use Shampine\Sequence\Support\Str;
 
@@ -33,7 +33,7 @@ abstract class AbstractPipeline
     protected array $excludeWhenNull = [];
 
     /**
-     * @var AbstractResponse|ErrorResponseWrapperWrapper
+     * @var AbstractResponse|ErrorResponseWrapper
      */
     protected $responsePayload;
 
@@ -55,9 +55,9 @@ abstract class AbstractPipeline
         try {
             $responsePayload = $pipeline->process($requestPayload);
         } catch (ValidationException $validationException) {
-            $responsePayload = new ErrorResponseWrapperWrapper($validationException);
+            $responsePayload = new ErrorResponseWrapper($validationException);
         } catch (SequenceException $sequenceException) {
-            $responsePayload = new ErrorResponseWrapperWrapper($sequenceException);
+            $responsePayload = new ErrorResponseWrapper($sequenceException);
         }
 
         $this->responsePayload = $responsePayload;
@@ -70,7 +70,7 @@ abstract class AbstractPipeline
      */
     public function format(bool $useSnakeCase = true): array
     {
-        if ($this->responsePayload instanceof ErrorResponseWrapperWrapper) {
+        if ($this->responsePayload instanceof ErrorResponseWrapper) {
             $response = $this->responsePayload;
         } else {
             $response = (new SuccessResponseWrapper())->setData(
@@ -82,7 +82,7 @@ abstract class AbstractPipeline
     }
 
     /**
-     * @param ErrorResponseWrapperWrapper|SuccessResponseWrapper|AbstractResponse $class
+     * @param ErrorResponseWrapper|SuccessResponseWrapper|AbstractResponse $class
      * @param bool $useSnakeCase
      * @return array<mixed>
      */
@@ -113,7 +113,7 @@ abstract class AbstractPipeline
     }
 
     /**
-     * @return AbstractResponse|ErrorResponseWrapperWrapper
+     * @return AbstractResponse|ErrorResponseWrapper
      */
     public function getResponsePayload()
     {
