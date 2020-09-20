@@ -5,7 +5,7 @@ namespace Shampine\Tests\Sample;
 
 use League\Pipeline\Pipeline;
 use Shampine\Sequence\Pipeline\AbstractPipeline;
-use Shampine\Sequence\Process\HydrateResponsePayloadProcess;
+use Shampine\Sequence\Process\HydrateResponseProcess;
 
 class SamplePipeline extends AbstractPipeline
 {
@@ -28,7 +28,7 @@ class SamplePipeline extends AbstractPipeline
                 return (new Pipeline)
                     ->pipe(new ValidationExceptionProcess($validationFailure, $sampleUseService))
                     ->pipe(new SequenceExceptionProcess($sequenceFailure))
-                    ->pipe(new HydrateResponsePayloadProcess(SampleResponse::class));
+                    ->pipe(new HydrateResponseProcess(SampleResponse::class));
             }
         ];
 

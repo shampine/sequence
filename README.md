@@ -31,8 +31,8 @@ These examples are using Laravel conventions but this package is framework agnos
 
 See these three files for verbose usage examples and live demos inside the phpunit tests.
 
-[Sample RequestPayload](https://github.com/shampine/sequence/blob/master/tests/Sample/SampleRequestPayload.php)  
-[Sample ResponsePayload](https://github.com/shampine/sequence/blob/master/tests/Sample/SampleResponsePayload.php)  
+[Sample Payload](https://github.com/shampine/sequence/blob/master/tests/Sample/SamplePayload.php)  
+[Sample Response](https://github.com/shampine/sequence/blob/master/tests/Sample/SamplePayload.php)  
 [Sample Pipeline](https://github.com/shampine/sequence/blob/master/tests/Sample/SamplePipeline.php)  
 
 ### Payloads
@@ -80,7 +80,7 @@ class SamplePipeline extends AbstractPipeline
                 return (new Pipeline)
                     ->pipe(new ValidationExceptionProcess($validationFailure, $sampleUseService))
                     ->pipe(new SequenceExceptionProcess($sequenceFailure))
-                    ->pipe(new HydrateResponsePayloadProcess(SampleResponsePayload::class));
+                    ->pipe(new HydrateResponseProcess(SampleResponsePayload::class));
             }
         ];
 
@@ -151,7 +151,7 @@ public function post(Request $request)
 ```
 
 #### PATCH
-Patch requests payloads require the `PatchInterface` and `PatchTrait`. The payload will contain methods to decipher what
+Patch payloads require the `PatchInterface` and `PatchTrait`. The payload will contain methods to decipher what
 is requested to be patched `->getPatch()` and whether the payload is a patch request `->isPatch()`.
 
 ```php
