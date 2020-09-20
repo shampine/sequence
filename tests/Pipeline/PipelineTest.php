@@ -138,6 +138,6 @@ class PipelineTest extends TestCase
         $payload = new SamplePayload();
         $pipeline = (new SamplePipeline())->process(SamplePipeline::SAMPLE_PIPELINE, $payload);
 
-        $this->assertInstanceOf(AbstractResponse::class, $pipeline->getResponsePayload());
+        $this->assertInstanceOf(AbstractResponse::class, $pipeline->getResponse());
     }
 }
