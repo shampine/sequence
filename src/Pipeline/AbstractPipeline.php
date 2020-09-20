@@ -35,15 +35,15 @@ abstract class AbstractPipeline
     /**
      * @var AbstractResponse|ErrorResponseWrapper
      */
-    protected $responsePayload;
+    protected $response;
 
     /**
      * @param string $pipelineName
-     * @param AbstractPayload $requestPayload
+     * @param AbstractPayload $payload
      * @param mixed ...$arguments
      * @return $this
      */
-    public function process(string $pipelineName, AbstractPayload $requestPayload, ...$arguments): self
+    public function process(string $pipelineName, AbstractPayload $payload, ...$arguments): self
     {
         if (!isset($this->pipelines[$pipelineName])) {
             throw new BadFunctionCallException('Pipeline name provided does not exist in pipelines.');
@@ -53,14 +53,14 @@ abstract class AbstractPipeline
         $pipeline = $this->pipelines[$pipelineName](...$arguments);
 
         try {
-            $responsePayload = $pipeline->process($requestPayload);
+            $response = $pipeline->process($payload);
         } catch (ValidationException $validationException) {
-            $responsePayload = new ErrorResponseWrapper($validationException);
+            $response = new ErrorResponseWrapper($validationException);
         } catch (SequenceException $sequenceException) {
-            $responsePayload = new ErrorResponseWrapper($sequenceException);
+            $response = new ErrorResponseWrapper($sequenceException);
         }
 
-        $this->responsePayload = $responsePayload;
+        $this->response = $response;
         return $this;
     }
 
@@ -70,11 +70,11 @@ abstract class AbstractPipeline
      */
     public function format(bool $useSnakeCase = true): array
     {
-        if ($this->responsePayload instanceof ErrorResponseWrapper) {
-            $response = $this->responsePayload;
+        if ($this->response instanceof ErrorResponseWrapper) {
+            $response = $this->response;
         } else {
             $response = (new SuccessResponseWrapper())->setData(
-                $this->transform($this->responsePayload, $useSnakeCase)
+                $this->transform($this->response, $useSnakeCase)
             );
         }
 
@@ -115,8 +115,8 @@ abstract class AbstractPipeline
     /**
      * @return AbstractResponse|ErrorResponseWrapper
      */
-    public function getResponsePayload()
+    public function getResponse()
     {
-        return $this->responsePayload;
+        return $this->response;
     }
 }
