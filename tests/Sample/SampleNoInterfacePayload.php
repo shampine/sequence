@@ -5,6 +5,6 @@ namespace Shampine\Tests\Sample;
 
 use Shampine\Sequence\Payload\AbstractPayload;
 
-class SampleNoPatchInterfacePayload extends AbstractPayload
+class SampleNoInterfacePayload extends AbstractPayload
 {
 }
