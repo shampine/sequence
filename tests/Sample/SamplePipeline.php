@@ -5,6 +5,7 @@ namespace Shampine\Tests\Sample;
 
 use League\Pipeline\Pipeline;
 use Shampine\Sequence\Pipeline\AbstractPipeline;
+use Shampine\Sequence\Process\ChildPipelineProcess;
 use Shampine\Sequence\Process\HydrateResponseProcess;
 
 class SamplePipeline extends AbstractPipeline
@@ -13,6 +14,8 @@ class SamplePipeline extends AbstractPipeline
      * @constant string
      */
     public const SAMPLE_PIPELINE = 'SamplePipeline';
+
+    public const SAMPLE_CHILD_PIPELINE = 'SampleChildPipeline';
 
     /**
      * @param SampleUseService|null $sampleUseService
@@ -29,7 +32,14 @@ class SamplePipeline extends AbstractPipeline
                     ->pipe(new ValidationExceptionProcess($validationFailure, $sampleUseService))
                     ->pipe(new SequenceExceptionProcess($sequenceFailure))
                     ->pipe(new HydrateResponseProcess(SampleResponse::class));
-            }
+            },
+            self::SAMPLE_CHILD_PIPELINE => static function()
+            {
+                return (new Pipeline)
+                    ->pipe(new ChildPipelineProcess())
+                    ->pipe(new HydrateResponseProcess(SampleResponse::class));
+
+            },
         ];
 
         $this->excludeWhenEmpty = [
