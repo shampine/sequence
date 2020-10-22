@@ -5,10 +5,11 @@ namespace Shampine\Tests\Payload;
 
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use Shampine\Tests\Sample\SampleNoPatchInterfacePayload;
+use Shampine\Sequence\Payload\PaginationInterface;
+use Shampine\Tests\Sample\SampleNoInterfacePayload;
 use Shampine\Tests\Sample\SamplePayload;
 
-class AbstractRequestPayloadTest extends TestCase
+class AbstractPayloadTest extends TestCase
 {
     /**
      * @return void
@@ -36,7 +37,7 @@ class AbstractRequestPayloadTest extends TestCase
     {
         self::expectException(RuntimeException::class);
 
-        (new SampleNoPatchInterfacePayload())->hydratePatch();
+        (new SampleNoInterfacePayload())->hydratePatch();
     }
 
     /**
@@ -56,6 +57,28 @@ class AbstractRequestPayloadTest extends TestCase
         self::assertEquals(21, $payload->getAge());
         self::assertTrue($payload->isPatch());
         self::assertEquals(['name', 'age'], $payload->getPatch());
+    }
+
+    public function testPaginationException(): void
+    {
+        self::expectException(RuntimeException::class);
+
+        (new SampleNoInterfacePayload())->hydratePagination();
+    }
+
+    public function testPagination(): void
+    {
+        $payload = (new SamplePayload())->hydratePagination(
+            [
+                PaginationInterface::OFFSET => 111,
+                PaginationInterface::LIMIT  => 222,
+                PaginationInterface::CURSOR => 333,
+            ]
+        );
+
+        self::assertEquals(111, $payload->getOffset());
+        self::assertEquals(222, $payload->getLimit());
+        self::assertEquals(333, $payload->getCursor());
     }
 
     /**

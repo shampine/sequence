@@ -52,6 +52,31 @@ abstract class AbstractPayload
     }
 
     /**
+     * @param array<mixed> $query
+     * @return $this
+     */
+    final public function hydratePagination(array $query = []): self
+    {
+        if (!$this instanceof PaginationInterface) {
+            throw new RuntimeException('Payload must implement PaginationInterface');
+        }
+
+        if (isset($query[PaginationInterface::OFFSET])) {
+            $this->setOffset((int) $query[PaginationInterface::OFFSET]);
+        }
+
+        if (isset($query[PaginationInterface::LIMIT])) {
+            $this->setLimit((int) $query[PaginationInterface::LIMIT]);
+        }
+
+        if (isset($query[PaginationInterface::CURSOR])) {
+            $this->setCursor((int) $query[PaginationInterface::CURSOR]);
+        }
+
+        return $this;
+    }
+
+    /**
      * @param array<mixed> $values
      * @param bool $isPatch
      * @return $this

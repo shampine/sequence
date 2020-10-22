@@ -4,12 +4,15 @@ declare(strict_types=1);
 namespace Shampine\Tests\Sample;
 
 use Shampine\Sequence\Payload\AbstractPayload;
+use Shampine\Sequence\Payload\PaginationInterface;
+use Shampine\Sequence\Payload\PaginationTrait;
 use Shampine\Sequence\Payload\PatchInterface;
 use Shampine\Sequence\Payload\PatchTrait;
 
-class SamplePayload extends AbstractPayload implements PatchInterface
+class SamplePayload extends AbstractPayload implements PaginationInterface, PatchInterface
 {
-    use PatchTrait;
+    use PaginationTrait,
+        PatchTrait;
 
     /**
      * @constant array<string>
