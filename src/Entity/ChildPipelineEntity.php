@@ -40,6 +40,11 @@ class ChildPipelineEntity
     protected bool $suppressErrors = false;
 
     /**
+     * @var bool
+     */
+    protected bool $isProcessed = false;
+
+    /**
      * @return AbstractPayload
      */
     public function getPayload(): AbstractPayload
@@ -144,6 +149,24 @@ class ChildPipelineEntity
     public function setSuppressErrors(bool $suppressErrors): self
     {
         $this->suppressErrors = $suppressErrors;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsProcessed(): bool
+    {
+        return $this->isProcessed;
+    }
+
+    /**
+     * @param bool $isProcessed
+     * @return $this
+     */
+    public function setIsProcessed(bool $isProcessed): self
+    {
+        $this->isProcessed = $isProcessed;
         return $this;
     }
 }
