@@ -35,6 +35,8 @@ class ChildPipelineProcess extends AbstractProcess
                 ...$entity->getArguments()
             );
 
+            $entity->setIsProcessed(true);
+
             if ($pipeline->getResponse() instanceof ErrorResponseWrapper) {
                 if ($entity->getSuppressErrors() === true) {
                     continue;
