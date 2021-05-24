@@ -16,7 +16,7 @@ class AbstractPayloadTest extends TestCase
      */
     public function testPost(): void
     {
-        $payload = (new SamplePayload(SamplePayload::WHITELIST))->hydratePost(
+        $payload = (new SamplePayload(SamplePayload::ALLOWLIST))->hydratePost(
             [
                 'name' => 'Maxwell Namerson',
                 'age' => 21,
@@ -45,7 +45,7 @@ class AbstractPayloadTest extends TestCase
      */
     public function testPatch(): void
     {
-        $payload = (new SamplePayload(SamplePayload::WHITELIST))->hydratePatch(
+        $payload = (new SamplePayload(SamplePayload::ALLOWLIST))->hydratePatch(
             [
                 'name' => 'Maxwell Namerson',
                 'age' => 21,
@@ -84,7 +84,7 @@ class AbstractPayloadTest extends TestCase
     /**
      * @return void
      */
-    public function testWhitelist(): void
+    public function testAllowlist(): void
     {
         $payload = (new SamplePayload(['name']))->hydratePost(
             [
@@ -103,7 +103,7 @@ class AbstractPayloadTest extends TestCase
      */
     public function testOverrides(): void
     {
-        $payload = new SamplePayload(SamplePayload::WHITELIST, SamplePayload::OVERRIDES);
+        $payload = new SamplePayload(SamplePayload::ALLOWLIST, SamplePayload::OVERRIDES);
         $payload->hydratePost(
             [
                 'name' => 'Maxwell Namerson',
