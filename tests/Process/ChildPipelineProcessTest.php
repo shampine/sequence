@@ -62,6 +62,25 @@ class ChildPipelineProcessTest extends TestCase
         self::assertEquals('Maxwell is 99 years old.', $response['data']['sample_about']);
     }
 
+    public function testChildPipelineIsProcessed(): void
+    {
+        $childPipelineEntity = new ChildPipelineEntity();
+        $childPipelineEntity->setIsProcessed(true);
+
+        self::assertIsBool($childPipelineEntity->getIsProcessed());
+        self::assertTrue($childPipelineEntity->getIsProcessed());
+
+        $payload = new SampleChildPipelinePayload();
+        $response = (new SamplePipeline())->process(SamplePipeline::SAMPLE_CHILD_PIPELINE, $payload)->format();
+
+        self::assertIsArray($response);
+        self::assertEquals(200, $response['status_code']);
+        self::assertNull($response['error_code']);
+        self::assertNull($response['message']);
+        self::assertNull($response['error_messages']);
+        self::assertEquals('Maxwell is 99 years old.', $response['data']['sample_about']);
+    }
+
     public function testChildPipelineSuppressErrors(): void
     {
         $childPipelineEntity = new ChildPipelineEntity();
