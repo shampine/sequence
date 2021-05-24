@@ -11,7 +11,7 @@ abstract class AbstractPayload
     /**
      * @var array<string>
      */
-    protected array $whitelist = [];
+    protected array $allowlist = [];
 
     /**
      * @var array<string>
@@ -20,11 +20,11 @@ abstract class AbstractPayload
 
     /**
      * @param array<string> $overrides
-     * @param array<string> $whitelist
+     * @param array<string> $allowlist
      */
-    public function __construct(array $whitelist = [], array $overrides = [])
+    public function __construct(array $allowlist = [], array $overrides = [])
     {
-        $this->whitelist = $whitelist;
+        $this->allowlist = $allowlist;
         $this->overrides = $overrides;
     }
 
@@ -90,7 +90,7 @@ abstract class AbstractPayload
                 $key = $this->overrides[$key];
             }
 
-            if (!in_array($key, $this->whitelist)) {
+            if (!in_array($key, $this->allowlist)) {
                 continue;
             }
 

@@ -40,15 +40,15 @@ See these three files for verbose usage examples and live demos inside the phpun
 This is the active workspace. The payload is mutated as it passes thru each stage. Any data needed from one
 stage to another needs to be set on the payload, and then retrieved from the payload.
 
-When defining your Payloads you can optionally define a `$whitelist` and `$overrides`.
+When defining your Payloads you can optionally define a `$allowlist` and `$overrides`.
 
 ```php
-$whitelist = ['email']; // Only hydrate `email` from post/patch
+$allowlist = ['email']; // Only hydrate `email` from post/patch
 $overrides = ['email_address' => 'email']; // Allows `email_address` to be hydrated as `email`
-$payload = new \Sample\SamplePayload($whitelist, $overrides);
+$payload = new \Sample\SamplePayload($allowlist, $overrides);
 ```
 
-A whitelist will limit what user supplied input will be hydrated into the Payload. The overrides parameter allows
+An allowlist will limit what user supplied input will be hydrated into the Payload. The overrides parameter allows
 mapping of different external keys to internal keys. E.g. if the post contains `email_address` but on the payload the 
 method is called `setEmail`. Mapping `['email_address' => 'email']` will properly align hydration.
 

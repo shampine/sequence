@@ -17,7 +17,7 @@ class SamplePayload extends AbstractPayload implements PaginationInterface, Patc
     /**
      * @constant array<string>
      */
-    public const WHITELIST = [
+    public const ALLOWLIST = [
         'name',
         'age',
     ];
