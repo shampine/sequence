@@ -57,6 +57,12 @@ class AbstractPayloadTest extends TestCase
         self::assertEquals(21, $payload->getAge());
         self::assertTrue($payload->isPatch());
         self::assertEquals(['name', 'age'], $payload->getPatch());
+        self::assertTrue($payload->hasPatchField('name'));
+        self::assertTrue($payload->hasPatchField('age'));
+
+        $payload->addPatchField('added_field');
+
+        self::assertTrue($payload->hasPatchField('added_field'));
     }
 
     public function testPaginationException(): void

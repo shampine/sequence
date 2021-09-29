@@ -41,4 +41,23 @@ trait PatchTrait
     {
         return $this->isPatch;
     }
+
+    /**
+     * @param string $field
+     * @return bool
+     */
+    public function hasPatchField(string $field): bool
+    {
+        return (in_array($field, $this->patch));
+    }
+
+    /**
+     * @param string $field
+     * @return $this
+     */
+    public function addPatchField(string $field)
+    {
+        $this->patch[] = $field;
+        return $this;
+    }
 }

@@ -20,4 +20,16 @@ interface PatchInterface
      * @return bool
      */
     public function isPatch(): bool;
+
+    /**
+     * @param string $field
+     * @return bool
+     */
+    public function hasPatchField(string $field): bool;
+
+    /**
+     * @param string $field
+     * @return self
+     */
+    public function addPatchField(string $field);
 }
