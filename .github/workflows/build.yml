@@ -1,7 +1,7 @@
 name: Sequence Build
 on: push
 jobs:
-  build:
+  run:
     runs-on: ubuntu-latest
     strategy:
       matrix:
