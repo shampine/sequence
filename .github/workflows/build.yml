@@ -1,4 +1,4 @@
-name: Sequence Build ${{ matrix.php-versions }}
+name: Build [7.4,8.0]
 on: push
 jobs:
   run:
