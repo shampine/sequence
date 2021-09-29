@@ -15,7 +15,15 @@ class SamplePipeline extends AbstractPipeline
      */
     public const SAMPLE_PIPELINE = 'SamplePipeline';
 
+    /**
+     * @constant string
+     */
     public const SAMPLE_CHILD_PIPELINE = 'SampleChildPipeline';
+
+    /**
+     * @constant string
+     */
+    public const SAMPLE_NO_PROCESS_PIPELINE = 'SampleNoProcessPipeline';
 
     /**
      * @param SampleUseService|null $sampleUseService
@@ -39,6 +47,10 @@ class SamplePipeline extends AbstractPipeline
                     ->pipe(new ChildPipelineProcess())
                     ->pipe(new HydrateResponseProcess(SampleResponse::class));
 
+            },
+            self::SAMPLE_NO_PROCESS_PIPELINE => static function() {
+                return (new Pipeline)
+                    ->pipe(new NoProcessExceptionProcess());
             },
         ];
 
