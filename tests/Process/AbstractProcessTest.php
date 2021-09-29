@@ -31,6 +31,6 @@ class AbstractProcessTest extends TestCase
         self::expectException(RuntimeException::class);
 
         $payload = new SamplePayload();
-        (new SamplePipeline())->process('DoesNotExist', $payload);
+        (new SamplePipeline())->process(SamplePipeline::SAMPLE_NO_PROCESS_PIPELINE, $payload);
     }
 }
