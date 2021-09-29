@@ -1,4 +1,4 @@
-name: Sequence Build
+name: Sequence Build ${{ matrix.operating-system }}
 on: push
 jobs:
   run:
