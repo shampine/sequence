@@ -1,14 +1,17 @@
-name: Sequence Build
+name: Build [7.4,8.0]
 on: push
 jobs:
-  build:
+  run:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+          php-versions: ['7.4', '8.0']
 
     steps:
     - name: Setup PHP with PECL extension
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '7.4'
+        php-version: ${{ matrix.php-versions }}
 
     - uses: actions/checkout@v2
 
