@@ -66,7 +66,7 @@ trait PaginationTrait
 
     /**
      * @param int $cursor
-     * @return $this;
+     * @return $this
      */
     public function setCursor(int $cursor): self
     {
