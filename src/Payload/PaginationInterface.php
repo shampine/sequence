@@ -21,9 +21,9 @@ interface PaginationInterface
     public const CURSOR = 'cursor';
 
     public function getOffset(): int;
-    public function setOffset(int $offset): self;
+    public function setOffset(int $offset);
     public function getLimit(): int;
-    public function setLimit(int $limit): self;
+    public function setLimit(int $limit);
     public function getCursor(): int;
-    public function setCursor(int $cursor): self;
+    public function setCursor(int $cursor);
 }
