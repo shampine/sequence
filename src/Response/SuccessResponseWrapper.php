@@ -5,7 +5,7 @@ namespace Shampine\Sequence\Response;
 
 use Shampine\Sequence\Support\StatusCode;
 
-class SuccessResponseWrapper
+class SuccessResponseWrapper implements GetterInterface
 {
     use GetterTrait;
 
