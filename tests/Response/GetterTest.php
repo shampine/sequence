@@ -19,8 +19,6 @@ class GetterTest extends TestCase
         $payload->setName('Maxwell');
         $response = new SampleResponse($payload);
 
-        echo $response->getSampleAbout();
-
         $this->assertEquals('Maxwell is 21 years old.', $response->sampleAbout);
         $this->assertEquals('noGetterTestValue', $response->noGetterTestValue);
         $this->assertNull($response->noProperty);
