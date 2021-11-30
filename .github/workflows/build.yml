@@ -1,11 +1,11 @@
-name: Build [7.4,8.0]
+name: Build [7.4,8.0,8.1]
 on: push
 jobs:
   run:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-          php-versions: ['7.4', '8.0']
+          php-versions: ['7.4', '8.0', '8.1']
 
     steps:
     - name: Setup PHP with PECL extension

@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php" : "^7.4|^8.0",
+        "php" : "^7.4|^8.0|^8.1",
         "league/pipeline": "^1.0"
     },
     "autoload": {
@@ -24,7 +24,7 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.3",
-        "phpstan/phpstan": "^0.12.42"
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^1.2"
     }
 }

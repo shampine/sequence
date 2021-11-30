@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Shampine\Tests\Exceptions;
 
 use PHPUnit\Framework\TestCase;
+use Shampine\Sequence\Exceptions\ExceptionTrait;
 use Shampine\Sequence\Exceptions\SequenceException;
 use Shampine\Sequence\Exceptions\ValidationException;
 
@@ -16,6 +17,7 @@ class ExceptionTest extends TestCase
      */
     public function testException(string $exceptionClass): void
     {
+        /** @var SequenceException|ValidationException $exception */
         $exception = new $exceptionClass;
         $exception->setErrorCode(9999);
         $exception->setHttpCode(200);
@@ -29,7 +31,7 @@ class ExceptionTest extends TestCase
     }
 
     /**
-     * @return array<array>
+     * @return array<array<string>>
      */
     public function exceptionProvider(): array
     {
