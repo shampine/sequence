@@ -33,7 +33,7 @@ class ExceptionTest extends TestCase
     /**
      * @return array<array<string>>
      */
-    public function exceptionProvider(): array
+    public static function exceptionProvider(): array
     {
         return [
             [
